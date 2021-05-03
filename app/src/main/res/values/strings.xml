@@ -2,4 +2,5 @@
     <string name="app_name">Будильник</string>
     <string name="StartAlarm">Запустить</string>
     <string name="EndAlarm">Остановить</string>
+    <string name="txtAlarm">Будильник не установлен</string>
 </resources>
