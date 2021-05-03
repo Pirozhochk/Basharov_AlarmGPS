@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">AlarmGPS</string>
+    <string name="app_name">Будильник</string>
+    <string name="StartAlarm">Запустить</string>
+    <string name="EndAlarm">Остановить</string>
 </resources>
