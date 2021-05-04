@@ -13,14 +13,44 @@ class RingtoneService : Service() {
         lateinit var ring: Ringtone
     }
 
+    var id: Int = 0
+    var isRunning: Boolean = false
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        playAlarm()
 
-        return super.onStartCommand(intent, flags, startId)
+        var state: String = intent!!.getStringExtra("extra").toString()
+        assert(state != null)
+        when(state) {
+            "on" -> id = 1
+            "off" -> id = 0
+        }
+
+        if (!this.isRunning && id == 1) {
+            playAlarm()
+            this.isRunning = true
+            this.id = 0
+        }
+        else if (this.isRunning && id == 0) {
+            ring.stop()
+            this.isRunning = false
+            this.id = 0
+        }
+        else if (!this.isRunning && id == 1) {
+            this.isRunning = false
+            this.id = 0
+        }
+        else if (this.isRunning && id == 1) {
+            this.isRunning = true
+            this.id = 1
+        }
+        else{
+            //пусто
+        }
+        return START_NOT_STICKY
     }
 
     private fun playAlarm() {

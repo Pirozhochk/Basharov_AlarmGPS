@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 minStr = "0$minute"
             alarmTxt.setText("Будильник установлен на $hrStr:$minStr")
 
+            myIntent.putExtra("extra","on")
+
             pi = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             am.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
         }
@@ -72,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             alarmTxt.setText(R.string.txtAlarm)
             pi = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             am.cancel(pi)
+            myIntent.putExtra("extra","off")
             sendBroadcast(myIntent)
         }
     }
