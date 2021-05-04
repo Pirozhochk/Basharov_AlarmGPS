@@ -1,7 +1,9 @@
 package ru.basharov.alarmgps
 
 import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     var hour: Int = 0
     var minute: Int = 0
 
+    lateinit var pi:PendingIntent
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         btnEnd = findViewById(R.id.EndAlarm)
 
         var calendar: Calendar = Calendar.getInstance()
+        var myIntent: Intent = Intent(this, AlarmReceiver::class.java)
         btnStart.setOnClickListener{
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 calendar.set(Calendar.HOUR_OF_DAY,tp.hour)
@@ -58,10 +63,16 @@ class MainActivity : AppCompatActivity() {
             if (minute < 10)
                 minStr = "0$minute"
             alarmTxt.setText("Будильник установлен на $hrStr:$minStr")
+
+            pi = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            am.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
         }
 
         btnEnd.setOnClickListener{
             alarmTxt.setText(R.string.txtAlarm)
+            pi = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            am.cancel(pi)
+            sendBroadcast(myIntent)
         }
     }
 }
