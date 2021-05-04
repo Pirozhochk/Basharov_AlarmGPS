@@ -1,11 +1,16 @@
 package ru.basharov.alarmgps
 
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.IBinder
+import androidx.core.app.NotificationCompat
 
 class RingtoneService : Service() {
 
@@ -33,6 +38,7 @@ class RingtoneService : Service() {
             playAlarm()
             this.isRunning = true
             this.id = 0
+            fireNotification()
         }
         else if (this.isRunning && id == 0) {
             ring.stop()
@@ -53,6 +59,24 @@ class RingtoneService : Service() {
         return START_NOT_STICKY
     }
 
+    private fun fireNotification() {
+        var mainActivityIntent: Intent = Intent(this, MainActivity::class.java)
+        var pi: PendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, 0)
+        var defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        var notifyManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var notification: Notification = NotificationCompat.Builder(this)
+            .setContentTitle("Будильник сработал")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSound(defSoundUri)
+            .setContentText("Нажми сюда")
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+
+        notifyManager.notify(0, notification)
+    }
+
     private fun playAlarm() {
         var alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         if (alarmUri == null){
@@ -60,5 +84,10 @@ class RingtoneService : Service() {
         }
         ring = RingtoneManager.getRingtone(baseContext, alarmUri)
         ring.play()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.isRunning = false
     }
 }
