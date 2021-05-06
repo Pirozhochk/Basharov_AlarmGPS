@@ -4,12 +4,14 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -76,5 +78,13 @@ class MainActivity : AppCompatActivity() {
             myIntent.putExtra("extra","off")
             sendBroadcast(myIntent)
         }
+    }
+
+    private fun checkPermission(): Boolean{
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
     }
 }
