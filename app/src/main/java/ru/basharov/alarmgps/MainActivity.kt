@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     var minute: Int = 0
     lateinit var pi:PendingIntent
 
+    private var PERMISSION_ID = 52
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -86,5 +88,9 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    private fun RequestPermission(){
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.ACCESS_COARSE_LOCATION), PERMISSION_ID)
     }
 }
