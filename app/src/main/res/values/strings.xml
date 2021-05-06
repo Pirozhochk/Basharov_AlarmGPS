@@ -3,4 +3,5 @@
     <string name="StartAlarm">Запустить</string>
     <string name="EndAlarm">Остановить</string>
     <string name="txtAlarm">Будильник не установлен</string>
+    <string name="gps">Местоположение</string>
 </resources>

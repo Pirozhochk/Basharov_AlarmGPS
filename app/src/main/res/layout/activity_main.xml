@@ -15,22 +15,36 @@
 
     <Button
         android:id="@+id/EndAlarm"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="80dp"
         android:text="@string/EndAlarm"
-        android:textSize="17sp"
+        android:textSize="11sp"
         android:layout_below="@+id/TimePicker"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_alignParentStart="true"
-        />
+        tools:ignore="SmallSp" />
+
+    <Button
+        android:id="@+id/btnGPS"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/TimePicker"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="31dp"
+        android:layout_toStartOf="@+id/StartAlarm"
+        android:layout_toEndOf="@+id/EndAlarm"
+        android:text="@string/gps"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
 
     <Button
         android:id="@+id/StartAlarm"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="80dp"
         android:text="@string/StartAlarm"
-        android:textSize="17sp"
+        android:textSize="13sp"
         android:layout_below="@+id/TimePicker"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
