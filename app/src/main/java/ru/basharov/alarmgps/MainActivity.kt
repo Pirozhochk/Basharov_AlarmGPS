@@ -5,11 +5,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnEnd: Button
     var hour: Int = 0
     var minute: Int = 0
-
     lateinit var pi:PendingIntent
 
     override fun onCreate(savedInstanceState: Bundle?) {
