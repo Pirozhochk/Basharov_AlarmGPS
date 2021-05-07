@@ -20,6 +20,7 @@ class RingtoneService : Service() {
 
     var id: Int = 0
     var isRunning: Boolean = false
+    private var CHANNEL_ID = "53"
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -65,7 +66,7 @@ class RingtoneService : Service() {
         var defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         var notifyManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        var notification: Notification = NotificationCompat.Builder(this)
+        var notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Будильник сработал")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setSound(defSoundUri)

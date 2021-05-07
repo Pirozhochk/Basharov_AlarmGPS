@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         btngps.setOnClickListener{
-            getLastLocation() }
+            getLastLocation()
+            getNewLocation()
+        }
     }
 
     private fun checkPermission(): Boolean{
@@ -123,7 +125,8 @@ class MainActivity : AppCompatActivity() {
                     if(location == null){
                         getNewLocation()
                     }else{
-                        txtGPS.text = "Ваши координаты:\nШирота:" + location.latitude + " ; Долгота:" + location.longitude
+                        txtGPS.text = "Ваши координаты:\nШирота:" + location.latitude + " ; Долгота:" + location.longitude + "\nГород: " +
+                                getCityName(location.latitude, location.longitude) + ", Страна: " + getCountryName(location.latitude, location.longitude)
                     }
                 }
             }else{
@@ -163,7 +166,8 @@ class MainActivity : AppCompatActivity() {
     private val locationCallBack = object: LocationCallback(){
         override fun onLocationResult(p0: LocationResult) {
             var lastLocation = p0.lastLocation
-            txtGPS.text = "Ваши координаты:\nШирота:" + lastLocation.latitude + " ; Долгота:" + lastLocation.longitude
+            txtGPS.text = "Ваши координаты:\nШирота:" + lastLocation.latitude + " ; Долгота:" + lastLocation.longitude + "\nГород: " +
+                    getCityName(lastLocation.latitude, lastLocation.longitude) + ", Страна: " + getCountryName(lastLocation.latitude, lastLocation.longitude)
         }
     }
 
@@ -174,5 +178,14 @@ class MainActivity : AppCompatActivity() {
         cityName = address.get(0).locality
 
         return cityName
+    }
+
+    private fun getCountryName(lat: Double, long: Double): String{
+        var countryName = ""
+        var geocoder = Geocoder(this, Locale.getDefault())
+        var address = geocoder.getFromLocation(lat,long,1)
+        countryName = address.get(0).countryName
+
+        return countryName
     }
 }
