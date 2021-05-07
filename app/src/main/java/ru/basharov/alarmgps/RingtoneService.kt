@@ -1,19 +1,17 @@
 package ru.basharov.alarmgps
 
-import android.app.Notification
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
 class RingtoneService : Service() {
-
     companion object{
         lateinit var ring: Ringtone
     }
@@ -66,6 +64,27 @@ class RingtoneService : Service() {
         var defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         var notifyManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val notificationChannel =
+                NotificationChannel("53","my_channel", importance)
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.vibrationPattern = longArrayOf(
+                100,
+                200,
+                300,
+                400,
+                500,
+                400,
+                300,
+                200,
+                400
+            )
+            notifyManager.createNotificationChannel(notificationChannel)
+        }
+
         var notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Будильник сработал")
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -74,7 +93,6 @@ class RingtoneService : Service() {
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-
         notifyManager.notify(0, notification)
     }
 
