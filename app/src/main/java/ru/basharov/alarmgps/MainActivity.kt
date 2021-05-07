@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -164,5 +165,14 @@ class MainActivity : AppCompatActivity() {
             var lastLocation = p0.lastLocation
             txtGPS.text = "Ваши координаты:\nШирота:" + lastLocation.latitude + " ; Долгота:" + lastLocation.longitude
         }
+    }
+
+    private fun getCityName(lat: Double, long: Double): String{
+        var cityName = ""
+        var geocoder = Geocoder(this, Locale.getDefault())
+        var address = geocoder.getFromLocation(lat,long,1)
+        cityName = address.get(0).locality
+
+        return cityName
     }
 }

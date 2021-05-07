@@ -36,8 +36,7 @@
         android:layout_toStartOf="@+id/StartAlarm"
         android:layout_toEndOf="@+id/EndAlarm"
         android:text="@string/gps"
-        android:textSize="10sp"
-        tools:ignore="SmallSp" />
+        android:textSize="16sp"/>
 
     <Button
         android:id="@+id/StartAlarm"
